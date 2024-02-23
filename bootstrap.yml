@@ -32,3 +32,8 @@
       community.general.sefcontext:
         substitute: "/home"
         target: "/local/home"
+
+    - name: Apply new SELinux file context to filesystem
+      become: true
+      ansible.builtin.command: restorecon -r /local/home
+      changed_when: false
