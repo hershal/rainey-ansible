@@ -22,7 +22,7 @@
     - name: Allow ladmin to run sudo without a password
       ansible.builtin.copy:
         src: sudo-ladmin.conf
-        dest: /etc/sudoers.d/ladmin.conf
+        dest: /etc/sudoers.d/ladmin
         owner: root
         group: root
         mode: '0440'
