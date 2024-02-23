@@ -21,10 +21,10 @@
 
 - name: Ensure NVIDIA CUDA repo is present
   ansible.builtin.yum_repository:
-    name: "{{ nvidia_cuda_repo_name }}"
-    description: "{{ nvidia_cuda_repo_description }}"
-    baseurl: "{{ nvidia_driver_rhel_cuda_repo_baseurl }}"
-    gpgkey: "{{ nvidia_driver_rhel_cuda_repo_gpgkey }}"
+    name: "{{ compute_nvidia_cuda_repo_name }}"
+    description: "{{ compute_nvidia_cuda_repo_description }}"
+    baseurl: "{{ compute_nvidia_driver_rhel_cuda_repo_baseurl }}"
+    gpgkey: "{{ compute_nvidia_driver_rhel_cuda_repo_gpgkey }}"
 
 - name: "Reset NVIDIA driver stream"
   ansible.builtin.dnf:
@@ -33,8 +33,8 @@
       - "@nvidia-driver"
     state: absent
     autoremove: true
-  when: nvidia_driver_reset_stream
+  when: compute_nvidia_driver_reset_stream
 
 - name: Ensure NVIDIA driver is present
   ansible.builtin.dnf:
-    name: "{{ '@nvidia-driver:' + nvidia_driver_branch }}"
+    name: "{{ '@nvidia-driver:' + compute_nvidia_driver_branch }}"
