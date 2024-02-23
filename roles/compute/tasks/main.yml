@@ -1,0 +1,49 @@
+- name: Ensure epel is installed
+  ansible.builtin.yum:
+    name: epel-release
+
+- name: Ensure the crb repository is enabled
+  community.general.dnf_config_manager:
+    name: crb
+    state: enabled
+
+- name: Ensure utilities are installed
+  ansible.builtin.yum:
+    name:
+      - htop
+      - nvtop
+      - task-spooler
+      - yt-dlp
+      - vim
+      - emacs
+
+- name: Install VPN utilities
+  ansible.builtin.yum:
+    name:
+      - NetworkManager-openconnect
+      - NetworkManager-openconnect-gnome
+      - openconnect
+
+- name: Add CUDA repo
+  yum_repository:
+    name: cuda
+    description: NVIDIA CUDA YUM Repo
+    baseurl: "{{ nvidia_driver_rhel_cuda_repo_baseurl }}"
+    gpgkey: "{{ nvidia_driver_rhel_cuda_repo_gpgkey }}"
+  when: nvidia_driver_add_repos | bool
+
+- name: Install driver packages RHEL/CentOS 9 and newer
+  dnf:
+    name: "{{ nvidia_driver_package_version | '@nvidia-driver:'+nvidia_driver_package_version }}"
+    state: "{{ nvidia_driver_package_state }}"
+    autoremove: "{{ nvidia_driver_package_state == 'absent' }}"
+  register: install_driver_rhel9
+  when: ansible_distribution_major_version > '8'
+
+- name: Set install_driver.changed var for RHEL 9
+  debug:
+      msg: Driver installed for RHEL
+  when: install_driver_rhel9.changed
+  register: install_driver
+  changed_when: install_driver_rhel9.changed
+  

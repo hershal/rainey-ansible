@@ -1,0 +1,22 @@
+---
+
+- name: Pre-tasks for all hosts
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Update DNF cache
+      tags: always
+      ansible.builtin.dnf:
+        update_cache: true
+
+- name: Install base
+  become: true
+  hosts: base
+  roles:
+    - base
+
+- name: Install compute
+  become: true
+  hosts: compute
+  roles:
+    - compute
