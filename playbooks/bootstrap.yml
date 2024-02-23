@@ -12,7 +12,12 @@
     - name: Add SSH key for ladmin
       ansible.posix.authorized_key:
         user: ladmin
-        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Lmr3j50gE+w34XuHYLhlOxc7wRAq/FJJ+CZsl+NiIGIqjvTTAJY/cr3ewfW3qzClYivhKREIarefU14Gp90jC32zWgIsJnoPKBWlSuKLAMBnfmDrUau8og9KDoLDegke30qd/hfArISxsJr21nKy6RIhaDW8uJoKIFB2qrP8bNoC315KOxCCpP6hv8XOg3dhwEeovKyXg7NM4Cx6O81hNPwVTZawNH5tlKHzM9DtsvZwvNmW8uGIwRLps2RRX7URRQOtGDat5ABMX1ZrLgmNVs2Yh1sJZM3St2Ny+o/2E2v4esO4Y2cEph9/L6AvbPxVD2BD2ku0idXd1mpTmzNP hbhave@bushido.local"
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Lmr3j50gE+w34XuHYLhlOxc7wRAq/FJJ+\
+          CZsl+NiIGIqjvTTAJY/cr3ewfW3qzClYivhKREIarefU14Gp90jC32zWgIsJnoPKBWlSuKLAMBnfm\
+          DrUau8og9KDoLDegke30qd/hfArISxsJr21nKy6RIhaDW8uJoKIFB2qrP8bNoC315KOxCCpP6hv8X\
+          Og3dhwEeovKyXg7NM4Cx6O81hNPwVTZawNH5tlKHzM9DtsvZwvNmW8uGIwRLps2RRX7URRQOtGDat\
+          5ABMX1ZrLgmNVs2Yh1sJZM3St2Ny+o/2E2v4esO4Y2cEph9/L6AvbPxVD2BD2ku0idXd1mpTmzNP \
+          hbhave@bushido.local"
 
     - name: Allow ladmin to run sudo without a password
       ansible.builtin.copy:
@@ -20,17 +25,10 @@
         dest: /etc/sudoers.d/ladmin.conf
         owner: root
         group: root
-        mode: 0440
+        mode: '0440'
 
-    - name: Check if using non-default home
-      ansible.posix.stat:
-        path: /local/home
-      register: local_home
-
-    - name: Fix Selinux for non-default home directory
+    - name: Fix SELinux context for local home
       become: true
-      ansible.builtin.command: "{{ item }}"
-      loop:
-        - semanage fcontext -a -e /home /local/home
-        - restorecon -R /local/home
-      when: local_home.exists
+      community.general.sefcontext:
+        substitute: "/home"
+        target: "/local/home"

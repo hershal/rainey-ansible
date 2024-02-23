@@ -1,5 +1,5 @@
 - name: Ensure epel is installed
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: epel-release
 
 - name: Ensure the crb repository is enabled
@@ -8,7 +8,7 @@
     state: enabled
 
 - name: Ensure utilities are installed
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - htop
       - nvtop
@@ -18,7 +18,7 @@
       - emacs
 
 - name: Install VPN utilities
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - NetworkManager-openconnect
       - NetworkManager-openconnect-gnome
