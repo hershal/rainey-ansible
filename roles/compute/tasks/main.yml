@@ -10,12 +10,7 @@
 - name: Ensure utilities are present
   ansible.builtin.dnf:
     name:
-      - htop
       - nvtop
-      - task-spooler
-      - yt-dlp
-      - vim
-      - emacs
 
 - name: Ensure VPN utilities are present
   ansible.builtin.dnf:
@@ -33,7 +28,7 @@
 
 - name: "Reset NVIDIA driver stream"
   ansible.builtin.dnf:
-    name: 
+    name:
       - nvidia-driver
       - "@nvidia-driver"
     state: absent
@@ -42,4 +37,4 @@
 
 - name: Ensure NVIDIA driver is present
   ansible.builtin.dnf:
-    name: "{{ '@nvidia-driver:'+nvidia_driver_branch }}"
+    name: "{{ '@nvidia-driver:' + nvidia_driver_branch }}"

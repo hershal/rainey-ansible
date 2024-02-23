@@ -1,0 +1,10 @@
+- name: Ensure GUI utilities are present
+  ansible.builtin.dnf:
+    name:
+      - gnome-tweaks
+      - gnome-extensions-app
+
+- name: Install flathub
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo

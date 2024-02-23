@@ -20,3 +20,9 @@
   hosts: compute
   roles:
     - compute
+
+- name: Install UI utilities
+  become: true
+  hosts: compute
+  roles:
+    - ui
