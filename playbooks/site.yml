@@ -4,10 +4,10 @@
   hosts: all
   become: true
   pre_tasks:
-    - name: Update DNF cache
-      tags: always
+    - name: DNF update cache
       ansible.builtin.dnf:
         update_cache: true
+      changed_when: false
 
 - name: Install base
   become: true
