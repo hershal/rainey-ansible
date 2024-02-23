@@ -1,0 +1,22 @@
+- name: Ensure base package groups are installed
+  ansible.builtin.dnf:
+    name:
+      - "@Workstation"
+      - "@Console Internet Tools"
+      - "@Graphical Administration Tools"
+      - "@Headless Management"
+      - "@System Tools"
+      - "@Development Tools"
+      - "@RPM Development Tools"
+      - "@Container Management"
+      - "@Scientific Support"
+      - "@VideoLAN Client"
+
+- name: Ensure utilities are present
+  ansible.builtin.dnf:
+    name:
+      - htop
+      - task-spooler
+      - yt-dlp
+      - vim
+      - emacs
