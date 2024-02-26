@@ -12,3 +12,9 @@ ansible_user=ladmin
 
 [ipaserver:vars]
 ansible_user=ladmin
+
+[ipareplica]
+10.0.0.66
+
+[ipareplica:vars]
+ansible_user=ladmin

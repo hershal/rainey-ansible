@@ -20,15 +20,25 @@
   hosts: ipaserver
   vars_files:
     - ipa-sensitive-data.yml
+    - ipa-data.yml
   roles:
-    - ipa-server-bootstrap
     - ipaserver
+
+- name: Install IPA replica
+  become: true
+  hosts: ipareplica
+  vars_files:
+    - ipa-sensitive-data.yml
+    - ipa-data.yml
+  roles:
+    - ipareplica
 
 - name: Configure IPA clients
   hosts: compute
   become: true
   vars_files:
     - ipa-sensitive-data.yml
+    - ipa-data.yml
   roles:
     - ipaclient
 

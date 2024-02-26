@@ -9,10 +9,3 @@
     name: cockpit.socket
     state: started
     enabled: true
-
-- name: Ensure IPA client is installed
-  ansible.builtin.dnf:
-    name:
-      - ipa-client
-      - ipa-client-samba
-      - ansible-freeipa

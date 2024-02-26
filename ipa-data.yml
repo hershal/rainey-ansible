@@ -1,0 +1,17 @@
+ipaserver_domain: rainey.r2labs.us
+ipaserver_realm: RAINEY.R2LABS.US
+ipaserver_setup_dns: yes
+ipaserver_auto_forwarders: yes
+ipaserver_allow_zone_overlap: yes
+
+ipareplica_setup_dns: yes
+ipareplica_auto_forwarders: yes
+
+ipaclient_domain: "rainey.r2labs.us"
+ipaclient_realm: "RAINEY.R2LABS.US"
+ipaclient_principal: "admin"
+ipaclient_password: "{{ ipadmin_password }}"
+ipaclient_mkhomedir: yes
+ipaclient_configure_dns_resolver: true
+ipaclient_dns_servers: 10.0.0.65,10.0.0.66
+ipaclient_cleanup_dns_resolver: true
