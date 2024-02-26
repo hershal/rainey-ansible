@@ -6,8 +6,10 @@
   pre_tasks:
     - name: DNF install updates
       ansible.builtin.dnf:
-        update_only: true
         update_cache: true
+        name: "*"
+        state: latest
+
   tasks:
     - name: Add SSH key for ladmin
       ansible.posix.authorized_key:

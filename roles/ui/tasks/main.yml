@@ -1,3 +1,12 @@
+- name: Ensure epel is present
+  ansible.builtin.dnf:
+    name: epel-release
+
+- name: Ensure the crb repository is enabled
+  community.general.dnf_config_manager:
+    name: crb
+    state: enabled
+
 - name: Ensure base package groups are installed
   ansible.builtin.dnf:
     name:
@@ -11,6 +20,13 @@
       - "@Container Management"
       - "@Scientific Support"
       - "@VideoLAN Client"
+
+- name: Ensure VPN utilities are present
+  ansible.builtin.dnf:
+    name:
+      - NetworkManager-openconnect
+      - NetworkManager-openconnect-gnome
+      - openconnect
 
 - name: Ensure utilities are present
   ansible.builtin.dnf:
