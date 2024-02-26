@@ -1,6 +1,8 @@
 [compute]
 10.0.0.129
 10.0.0.130
+10.0.0.97
+10.0.0.98
 
 [compute:vars]
 ansible_user=ladmin
