@@ -1,5 +1,18 @@
-- name: Ensure base package groups are installed
+- name: Ensure cockpit and related modules are installed
+  ansible.builtin.dnf:
+    name:
+      - cockpit
+      - cockpit-pcp
+
+- name: Ensure cockpit is enabled at boot
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    state: started
+    enabled: true
+
+- name: Ensure IPA client is installed
   ansible.builtin.dnf:
     name:
       - ipa-client
       - ipa-client-samba
+      - ansible-freeipa

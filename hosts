@@ -1,0 +1,17 @@
+[compute]
+10.0.0.129
+10.0.0.130
+
+[compute:vars]
+ansible_user=ladmin
+
+[ipaserver]
+10.0.0.65
+
+[ipaserver:vars]
+ansible_user=ladmin
+ipaserver_domain=rainey.r2labs.us
+ipaserver_realm=RAINEY.R2LABS.US
+ipaserver_setup_dns=yes
+ipaserver_auto_forwarders=yes
+ipaserver_allow_zone_overlap=yes

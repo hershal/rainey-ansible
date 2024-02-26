@@ -1,9 +1,0 @@
-compute_nvidia_driver_reset_stream: false
-compute_nvidia_driver_branch: "535"
-
-_compute_nvidia_rhel_repo_dir: "rhel{{ ansible_distribution_major_version }}/{{ ansible_architecture }}"
-compute_nvidia_driver_rhel_cuda_repo_baseurl: "https://developer.download.nvidia.com/compute/cuda/repos/{{ _compute_nvidia_rhel_repo_dir }}/"
-compute_nvidia_driver_rhel_cuda_repo_gpgkey: "https://developer.download.nvidia.com/compute/cuda/repos/{{ _compute_nvidia_rhel_repo_dir }}/D42D0685.pub"
-
-compute_nvidia_cuda_repo_name: "cuda-rhel{{ ansible_distribution_major_version }}"
-compute_nvidia_cuda_repo_description: "cuda-rhel{{ ansible_distribution_major_version }}-{{ ansible_architecture }}"

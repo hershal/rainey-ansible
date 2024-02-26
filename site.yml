@@ -15,14 +15,24 @@
   roles:
     - base
 
+- name: Install IPA servers
+  become: true
+  hosts: ipaserver
+  vars_files:
+    - ipa-sensitive-data.yml
+  roles:
+    - ipa-server
+#    - ipaserver
+
 - name: Install compute
   become: true
   hosts: compute
   roles:
-    - compute
+    - ui
+    - nvidia
 
-- name: Install UI utilities
+- name: Install workstations
   become: true
-  hosts: compute
+  hosts: workstations
   roles:
     - ui
