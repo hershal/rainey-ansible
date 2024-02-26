@@ -6,9 +6,9 @@ Start with the bootstrap script. This will set up the initial configuration to a
 
     ansible-playbook -i hosts bootstrap.yml --ask-become-pass
 
-Then, to set up the rest of the site, run the following. This will set up all the servers with the required packages and configuration.
+Then, to set up the rest of the site, run the following. This will set up all the servers with the required packages and configuration. Make sure you have the vault password handy, or just decrypt the `ipa-sensitive-data.yml` beforehand.
 
-    ansible-playbook -i hosts site.yml
+    ansible-playbook -i hosts site.yml --ask-vault-pass
 
 Note that this makes several assumptions about how the site is set up. Read below.
 
@@ -26,6 +26,4 @@ The hosts file should look something like this:
 
 
 ## TODOs
-- Ensure cockpit is loaded and enabled
-- Enroll in IPA realm on each machine
 - Set up IPA automounts

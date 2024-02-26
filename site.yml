@@ -15,14 +15,22 @@
   roles:
     - base
 
-- name: Install IPA servers
+- name: Install IPA server
   become: true
   hosts: ipaserver
   vars_files:
     - ipa-sensitive-data.yml
   roles:
-    - ipa-server
-#    - ipaserver
+    - ipa-server-bootstrap
+    - ipaserver
+
+- name: Configure IPA clients
+  hosts: compute
+  become: true
+  vars_files:
+    - ipa-sensitive-data.yml
+  roles:
+    - ipaclient
 
 - name: Install compute
   become: true

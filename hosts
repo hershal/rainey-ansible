@@ -12,8 +12,3 @@ ansible_user=ladmin
 
 [ipaserver:vars]
 ansible_user=ladmin
-ipaserver_domain=rainey.r2labs.us
-ipaserver_realm=RAINEY.R2LABS.US
-ipaserver_setup_dns=yes
-ipaserver_auto_forwarders=yes
-ipaserver_allow_zone_overlap=yes
