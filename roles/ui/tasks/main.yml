@@ -37,12 +37,18 @@
       - vim
       - emacs
       - tcsh
-
-- name: Ensure GUI utilities are present
-  ansible.builtin.dnf:
-    name:
+      - pass
+      - pass-otp
+      - pwgen
+      - cachefilesd
       - gnome-tweaks
       - gnome-extensions-app
+
+- name: Make sure a cachefilesd is running
+  ansible.builtin.systemd_service:
+    name: cachefilesd
+    enabled: true
+    state: started
 
 - name: Install flathub
   community.general.flatpak_remote:
