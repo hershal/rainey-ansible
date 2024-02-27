@@ -43,8 +43,9 @@
       - cachefilesd
       - gnome-tweaks
       - gnome-extensions-app
+      - python3-ansible-lint
 
-- name: Make sure a cachefilesd is running
+- name: Make sure cachefilesd is running
   ansible.builtin.systemd_service:
     name: cachefilesd
     enabled: true
