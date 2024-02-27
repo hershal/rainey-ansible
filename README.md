@@ -14,16 +14,8 @@ Note that this makes several assumptions about how the site is set up. Read belo
 
 ## Assumptions
 
-The site assumes we have a `compute` group of GPU-enabled machines with a local user `ladmin` which has the same password across the machines. The `ladmin` user has a home directory at `/local/home/ladmin` instead of the default to allow for NFS homes of users.
-
-The hosts file should look something like this:
-
-    [compute]
-    <compute nodes>
-
-    [compute:vars]
-    ansible_user=ladmin
-
+The site assumes we have a `compute` group of GPU-enabled machines with a local user `ladmin` which has the same password across the machines. The `ladmin` user has a home directory at `/local/home/ladmin` instead of the default to allow for NFS homes of users. Take a look at the hosts file for more information about how this is set up.
 
 ## TODOs
-- Set up IPA automounts
+- Set up slurm and enroot/singularity on compute nodes
+- Set up utils mount points
