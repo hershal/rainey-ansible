@@ -14,7 +14,7 @@ Note that this makes several assumptions about how the site is set up. Read belo
 
 ## Assumptions
 
-The site assumes we have a `compute` group of GPU-enabled machines with a local user `ladmin` which has the same password across the machines. The `ladmin` user has a home directory at `/local/home/ladmin` instead of the default to allow for NFS homes of users. Take a look at the hosts file for more information about how this is set up.
+The site assumes we have a `compute` group of GPU-enabled machines with a local user `ladmin` which has the same password across the machines. The `ladmin` user has a home directory at `/local/home/ladmin` instead of the default to allow for NFS homes of users. Take a look at the hosts file for more information about how this is set up. You may need to run `sudo setenforce 0` on any new nodes prior to running the bootstrap script, because by default RHEL9-based distros don't set up selinux on non-default home directories properly. The bootstrap script fixes this and it will no longer be an issue on later runs.
 
 ## TODOs
 - Set up slurm and enroot/singularity on compute nodes
