@@ -36,6 +36,7 @@
       - yt-dlp
       - vim
       - emacs
+      - tcsh
 
 - name: Ensure GUI utilities are present
   ansible.builtin.dnf:
