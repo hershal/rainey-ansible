@@ -21,14 +21,16 @@
       - "@Scientific Support"
       - "@VideoLAN Client"
 
-- name: Ensure VPN utilities are present
+- name: Ensure UI tools are present
   ansible.builtin.dnf:
     name:
       - NetworkManager-openconnect
       - NetworkManager-openconnect-gnome
       - openconnect
+      - gnome-tweaks
+      - gnome-extensions-app
 
-- name: Ensure utilities are present
+- name: Ensure CLI tools are present
   ansible.builtin.dnf:
     name:
       - htop
@@ -41,9 +43,37 @@
       - pass-otp
       - pwgen
       - cachefilesd
-      - gnome-tweaks
-      - gnome-extensions-app
       - python3-ansible-lint
+
+- name: Ensure development tools are present
+  ansible.builtin.dnf:
+    name:
+      - munge
+      - munge-devel
+      - freeipmi
+      - freeipmi-devel
+      - lua
+      - lua-devel
+      - mariadb
+      - mariadb-devel
+      - man2html
+      - numatop
+      - numactl-devel
+      - pam-devel
+      - pmix-devel
+      - readline-devel
+      - http-parser
+      - http-parser-devel
+      - json-c
+      - json-c-devel
+      - libyaml
+      - libyaml-devel
+      - libjwt
+      - libjwt-devel
+      - cpp-jwt-devel
+      - rrdtool
+      - rrdtool-devel
+      - libselinux-devel
 
 - name: Make sure cachefilesd is running
   ansible.builtin.systemd_service:
