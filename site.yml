@@ -33,6 +33,15 @@
   roles:
     - ipareplica
 
+- name: Preconfigure IPA clients
+  hosts: compute
+  become: true
+  tasks:
+    - name: Remove /home mount location to prep for automount
+      ansible.builtin.mount:
+        path: /home
+        state: absent
+
 - name: Configure IPA clients
   hosts: compute
   become: true
