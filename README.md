@@ -33,3 +33,5 @@ These host groups cascade so that `compute` is a superset of `workstation`, whic
 - Set up slurm and enroot/singularity on `compute` nodes with controllers on `server` nodes.
 - Set up LDAP-enabled VPN services on `server` nodes.
 - Set up some kind of metrics aggregation service on `server` nodes.
+- Fix/investigate why automount autoconfiguration via IPA module does not work (works when manually running `ipa-client-automount --location nas0 -U`)
+- Investigate DNS misconfiguration on compute nodes when on VPN (likely due to dns config on `ipaclient` module). May just need to remove `/etc/NetworkManager/conf.d/zzz-ipa.conf`
