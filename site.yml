@@ -34,7 +34,7 @@
     - ipareplica
 
 - name: Preconfigure IPA clients
-  hosts: compute
+  hosts: server:workstation:compute
   become: true
   tasks:
     - name: Remove /home mount location to prep for automount
@@ -43,7 +43,7 @@
         state: absent
 
 - name: Configure IPA clients
-  hosts: compute
+  hosts: server:workstation:compute
   become: true
   vars_files:
     - ipa-sensitive-data.yml
@@ -51,9 +51,20 @@
   roles:
     - ipaclient
 
-- name: Install compute
+- name: Install server tools
+  become: true
+  hosts: server:workstation:compute
+  roles:
+    - server
+
+- name: Install workstation tools
+  become: true
+  hosts: workstation:compute
+  roles:
+    - workstation
+
+- name: Install GPU tools
   become: true
   hosts: compute
   roles:
-    - ui
     - nvidia

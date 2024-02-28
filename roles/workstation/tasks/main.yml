@@ -1,0 +1,27 @@
+- name: Ensure base package groups are installed
+  ansible.builtin.dnf:
+    name:
+      - "@Workstation"
+      - "@Console Internet Tools"
+      - "@Graphical Administration Tools"
+      - "@Headless Management"
+      - "@System Tools"
+      - "@Development Tools"
+      - "@RPM Development Tools"
+      - "@Container Management"
+      - "@Scientific Support"
+      - "@VideoLAN Client"
+
+- name: Ensure workstation tools are present
+  ansible.builtin.dnf:
+    name:
+      - NetworkManager-openconnect
+      - NetworkManager-openconnect-gnome
+      - openconnect
+      - gnome-tweaks
+      - gnome-extensions-app
+
+- name: Install flathub
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo

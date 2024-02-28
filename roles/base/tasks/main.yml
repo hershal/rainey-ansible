@@ -5,7 +5,13 @@
       - cockpit-pcp
 
 - name: Ensure cockpit is enabled at boot
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: cockpit.socket
+    state: started
+    enabled: true
+
+- name: Ensure cockpit pcp (pmlogger) is enabled at boot
+  ansible.builtin.systemd_service:
+    name: pmlogger.service
     state: started
     enabled: true

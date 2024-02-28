@@ -7,6 +7,18 @@
 [compute:vars]
 ansible_user=ladmin
 
+[workstation]
+
+[workstation:vars]
+ansible_user=ladmin
+
+[server]
+10.0.0.67
+10.0.0.68
+
+[server:vars]
+ansible_user=ladmin
+
 [ipaserver]
 10.0.0.65
 
