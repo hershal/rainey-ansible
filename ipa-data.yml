@@ -13,11 +13,14 @@ ipaclient_realm: "RAINEY.R2LABS.US"
 ipaclient_principal: "admin"
 ipaclient_password: "{{ ipaadmin_password }}"
 ipaclient_mkhomedir: yes
-ipaclient_automount_location: "nas0"
+
+# Note: Neither of these automount configs work,
+# you'll have to set up automounts manually
+#ipaclient_automount_location: "nas0"
 
 # Remove once ansible-freeipa 1.12.1 is in el9 repo
 # `ipaclient_automount_location` supercedes this variable
-ipaautomount_location: "nas0"
+#ipaautomount_location: "nas0"
 
 #ipaclient_allow_repair: yes
 #ipaclient_configure_dns_resolver: true

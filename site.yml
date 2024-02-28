@@ -41,6 +41,13 @@
       ansible.builtin.mount:
         path: /home
         state: absent
+    - name: Add /fs mount point for NFS filesystems
+      ansible.builtin.file:
+        path: /fs
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
 
 - name: Configure IPA clients
   hosts: server:workstation:compute

@@ -10,6 +10,7 @@
 - name: Ensure CLI tools are present
   ansible.builtin.dnf:
     name:
+      - bash-completion
       - htop
       - task-spooler
       - yt-dlp
