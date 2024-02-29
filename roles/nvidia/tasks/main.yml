@@ -22,3 +22,7 @@
 - name: Ensure NVIDIA driver is present
   ansible.builtin.dnf:
     name: "{{ '@nvidia-driver:' + nvidia_driver_branch }}"
+
+- name: Ensure CUDA is present
+  ansible.builtin.dnf:
+    name: "cuda-12-2"

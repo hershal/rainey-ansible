@@ -22,6 +22,9 @@
       - pwgen
       - cachefilesd
       - python3-ansible-lint
+      - screen
+      - tmux
+      - cloud-utils-growpart
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:
@@ -35,6 +38,7 @@
       - lua
       - lua-devel
       - mariadb
+      - mariadb-server
       - mariadb-devel
       - man2html
       - numatop
@@ -46,6 +50,7 @@
       - http-parser-devel
       - json-c
       - json-c-devel
+      - jq
       - libyaml
       - libyaml-devel
       - libjwt
@@ -54,10 +59,11 @@
       - rrdtool
       - rrdtool-devel
       - libselinux-devel
+      - openssl-devel
       - perl-ExtUtils-MakeMaker
-      - openssl-devel 
       - perl-DBI
       - perl-Switch
+      - python3-mysqlclient
 
 - name: Ensure cachefilesd is enabled and running
   ansible.builtin.systemd_service:
