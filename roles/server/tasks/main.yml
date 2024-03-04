@@ -10,6 +10,7 @@
 - name: Ensure CLI tools are present
   ansible.builtin.dnf:
     name:
+      - realmd
       - bash-completion
       - htop
       - task-spooler
@@ -25,6 +26,13 @@
       - screen
       - tmux
       - cloud-utils-growpart
+      - podman
+      - podman-docker
+      - cockpit-podman
+      - podman-plugins
+      - ansible-collection-containers-podman
+      - pcp-pmda-podman
+      - podman-tui
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:
