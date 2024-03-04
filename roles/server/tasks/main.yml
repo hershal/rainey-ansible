@@ -11,6 +11,8 @@
   ansible.builtin.dnf:
     name:
       - realmd
+      - wget
+      - nmap
       - bash-completion
       - htop
       - task-spooler
@@ -38,6 +40,10 @@
 - name: Ensure development tools are present
   ansible.builtin.dnf:
     name:
+      - automake
+      - git
+      - libmd-devel
+      - libtool
       - rpm-build
       - munge
       - munge-libs
