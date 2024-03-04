@@ -9,3 +9,18 @@
         update_cache: true
         name: "*"
         state: latest
+
+    - name: See if servers need a reboot
+      ansible.builtin.command: needs-restarting -r
+      register: reg_reboot_required
+      ignore_errors: true
+      failed_when: false
+      changed_when: reg_reboot_required.rc != 0
+      notify:
+          - Reboot Servers
+
+  handlers:
+      - name: Reboot Servers
+        ansible.builtin.reboot:
+            msg: "Reboot initiated by Ansible after DNF update"
+            test_command: w
