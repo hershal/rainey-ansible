@@ -1,8 +1,9 @@
-- name: Ensure cockpit and related modules are installed
+- name: Ensure base packages are installed
   ansible.builtin.dnf:
     name:
       - cockpit
       - cockpit-pcp
+      - dnf-utils
 
 - name: Ensure cockpit is enabled at boot
   ansible.builtin.systemd_service:
