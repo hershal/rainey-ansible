@@ -48,7 +48,7 @@ Then, to set up the rest of the site, run the following. This will set up all th
 
     ansible-playbook -i hosts site.yml --ask-vault-pass
 
-After that, you'll have to set up the automounts on the new machine since there are upstream bugs ([1](https://github.com/freeipa/ansible-freeipa/issues/1166), [2](https://github.com/freeipa/ansible-freeipa/issues/151)) that won't be fixed until 12.1 is released. Consider using CentOS Stream for your ansible machine in the meantime. If not, use this to add automounts on the new machine:
+After that, you'll have to set up the automounts on the new machine since there are upstream bugs ([1](https://github.com/freeipa/ansible-freeipa/issues/1166), [2](https://github.com/freeipa/ansible-freeipa/issues/151)) that won't be fixed until 12.2 is released. Consider using CentOS Stream for your ansible machine in the meantime. If not, use this to add automounts on the new machine:
 
     sudo ipa-client-automount --location nas0 -U
 
