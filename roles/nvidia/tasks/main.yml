@@ -25,4 +25,4 @@
 
 - name: Ensure CUDA is present
   ansible.builtin.dnf:
-    name: "cuda-12-2"
+    name: "cuda-12-3"
