@@ -2,15 +2,7 @@
 
 These are ansible scripts to set up the Rainey site.
 
-Start with the bootstrap script. This will set up the initial configuration to allow everything else to run smoothly.
-
-    ansible-playbook -i hosts bootstrap.yml --ask-pass --ask-become-pass
-
-Then, to set up the rest of the site, run the following. This will set up all the servers with the required packages and configuration. Make sure you have the vault password handy, or just decrypt the `ipa-sensitive-data.yml` beforehand.
-
-    ansible-playbook -i hosts site.yml --ask-vault-pass
-
-Note that this makes several assumptions about how the site is set up. Read below.
+Note that this entire setup makes several assumptions about the site layout. Read below.
 
 ## Assumptions
 
@@ -29,8 +21,30 @@ Then we have the three other host groups:
 
 These host groups cascade so that `compute` is a superset of `workstation`, which is a superset of `server`, etc.
 
+
+## New machine install procedure
+
+First, install the new OS with the following considerations:
+- Make sure you set up an `ladmin` user with home at `/local/home/ladmin` and with a password that is the same across the site
+- Set up the network with a static IP, DNS pointing to the IPA server and replica, and a unique FQDN hostname.
+
+Boot the machine and run `setenforce 0`. Then install the VM guest utils if you need to. Finally, SSH to the host from your ansible nachine to populate the `known_hosts` file.
+
+Now we can provision the server. Start with the bootstrap script. This will set up the initial configuration to allow everything else to run smoothly.
+
+    ansible-playbook -i hosts bootstrap.yml --ask-pass --ask-become-pass
+
+Then, to set up the rest of the site, run the following. This will set up all the servers with the required packages and configuration. Make sure you have the vault password handy, or just decrypt the `ipa-sensitive-data.yml` beforehand.
+
+    ansible-playbook -i hosts site.yml --ask-vault-pass
+
+After that, you'll have to set up the automounts on the new machine since there are upstream bugs ([1](https://github.com/freeipa/ansible-freeipa/issues/1166), [2](https://github.com/freeipa/ansible-freeipa/issues/151)) that won't be fixed until 12.1 is released. Consider using CentOS Stream for your ansible machine in the meantime. If not, use this to add automounts on the new machine:
+
+    sudo ipa-client-automount --location nas0 -U
+
+And you're done! The new machine is ready for work.
+
 ## TODOs
 - Set up slurm and enroot/singularity on `compute` nodes with controllers on `server` nodes.
 - Set up LDAP-enabled WireGuard services on `server` nodes.
 - Set up some kind of metrics aggregation service on `server` nodes.
-- Fix/investigate why automount autoconfiguration via IPA module does not work (works when manually running `ipa-client-automount --location nas0 -U`)

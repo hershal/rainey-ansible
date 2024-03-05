@@ -37,7 +37,7 @@
   hosts: server:workstation:compute
   become: true
   tasks:
-    - name: Remove /home mount location to prep for automount
+    - name: Remove /home fstab to prep for automount
       ansible.builtin.mount:
         path: /home
         state: absent
