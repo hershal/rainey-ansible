@@ -36,6 +36,7 @@
       - ansible-collection-containers-podman
       - pcp-pmda-podman
       - podman-tui
+      - unrar
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:
