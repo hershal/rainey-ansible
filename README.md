@@ -4,13 +4,23 @@ These are ansible scripts to set up the Rainey site.
 
 Note that this entire setup makes several assumptions about the site layout. Read below.
 
+# Setup
+
+Most of everything that's needed for this is already installed in the base ansible install, except for `community.general.dnf_config_manager`.
+
+On your ansible machine, run
+
+    ansible-galaxy collection install community.general
+
+After doing that you should be able to run all the playbooks.
+
 ## Assumptions
 
 The site assumes we have a `compute` group of GPU-enabled machines with a local user `ladmin` which has the same password across the machines. The `ladmin` user has a home directory at `/local/home/ladmin` instead of the default to allow for NFS homes of users. Take a look at the hosts file for more information about how this is set up. You may need to run `sudo setenforce 0` on any new nodes prior to running the bootstrap script, because by default RHEL9-based distros don't set up selinux on non-default home directories properly. The bootstrap script fixes this and it will no longer be an issue on later runs.
 
 ### Hosts
 
-There are multiple hosts configured here. 
+There are multiple hosts configured here.
 
 There's an `ipaserver` which is the master IPA server. Then there is an `ipareplica` which is the secondary IPA server. Both of these have the main DNS entries pointing externally. All other hosts point two these servers for their own DNS entries. This is required for IPA to work.
 
@@ -28,7 +38,7 @@ First, install the new OS with the following considerations:
 - Make sure you set up an `ladmin` user with home at `/local/home/ladmin` and with a password that is the same across the site
 - Set up the network with a static IP, DNS pointing to the IPA server and replica, and a unique FQDN hostname.
 
-Boot the machine and run `setenforce 0`. Then install the VM guest utils if you need to. Finally, SSH to the host from your ansible nachine to populate the `known_hosts` file.
+Boot the machine and run `setenforce 0`. Then install the VM guest utils if you need to. Finally, SSH to the host from your ansible machine to populate the `known_hosts` file.
 
 Now we can provision the server. Start with the bootstrap script. This will set up the initial configuration to allow everything else to run smoothly.
 
