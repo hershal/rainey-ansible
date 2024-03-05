@@ -21,7 +21,7 @@
           5ABMX1ZrLgmNVs2Yh1sJZM3St2Ny+o/2E2v4esO4Y2cEph9/L6AvbPxVD2BD2ku0idXd1mpTmzNP \
           hbhave@bushido.local"
 
-    - name: Ensure policycoreutils-python is installed (for selinux)
+    - name: Ensure policycoreutils-python is installed for selinux
       ansible.builtin.dnf:
         name: policycoreutils-python-utils
 
@@ -33,13 +33,20 @@
         group: root
         mode: '0440'
 
-    - name: Fix SELinux context for local home
+    - name: Fix SELinux context for /local/home
       become: true
       community.general.sefcontext:
         substitute: "/home"
         target: "/local/home"
 
-    - name: Apply new SELinux file context to filesystem
+    - name: Apply SELinux context for /local/home filesystem
       become: true
       ansible.builtin.command: restorecon -r /local/home
       changed_when: false
+
+    - name: Fix SELinux for colord
+      become: true
+      ansible.posix.seboolean:
+        name: colord_use_nfs
+        persistent: true
+        state: true
