@@ -37,6 +37,7 @@
       - pcp-pmda-podman
       - podman-tui
       - unrar
+      - the_silver_searcher
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:

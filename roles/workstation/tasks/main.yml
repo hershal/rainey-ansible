@@ -20,3 +20,5 @@
       - openconnect
       - gnome-tweaks
       - gnome-extensions-app
+      - file-roller
+      - file-roller-nautilus
