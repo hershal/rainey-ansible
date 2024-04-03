@@ -70,8 +70,25 @@
   roles:
     - workstation
 
-- name: Install GPU tools
+- name: Install compute tools
   become: true
   hosts: compute
   roles:
     - nvidia
+
+- name: Install slurm
+  become: true
+  hosts: slurmworker:slurmcontroller
+  tasks:
+    - name: Copy munge key to compute and controller hosts
+      ansible.builtin.copy:
+        src: munge.key
+        dest: /etc/munge/munge.key
+        owner: root
+        group: root
+        mode: '0400'
+    - name: Ensure munge is enabled at boot
+      ansible.builtin.systemd_service:
+        name: munge
+        enabled: true
+        state: started

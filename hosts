@@ -1,33 +1,31 @@
+[all:vars]
+ansible_user=ladmin
+
 [compute]
 10.0.0.129
 10.0.0.130
 10.0.0.97
 10.0.0.98
 
-[compute:vars]
-ansible_user=ladmin
-
 [workstation]
-
-[workstation:vars]
-ansible_user=ladmin
 
 [server]
 10.0.0.67
 10.0.0.68
 10.0.0.71
 
-[server:vars]
-ansible_user=ladmin
-
 [ipaserver]
 10.0.0.65
-
-[ipaserver:vars]
-ansible_user=ladmin
 
 [ipareplica]
 10.0.0.66
 
-[ipareplica:vars]
-ansible_user=ladmin
+[slurmcontroller]
+10.0.0.67
+10.0.0.68
+
+[slurmworker]
+10.0.0.129
+10.0.0.130
+10.0.0.97
+10.0.0.98
