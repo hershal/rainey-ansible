@@ -81,6 +81,7 @@
       - perl-DBI
       - perl-Switch
       - python3-mysqlclient
+      - tigervnc-server
 
 - name: Ensure cachefilesd is enabled and running
   ansible.builtin.systemd_service:
