@@ -84,8 +84,8 @@
       ansible.builtin.copy:
         src: munge.key
         dest: /etc/munge/munge.key
-        owner: root
-        group: root
+        owner: munge
+        group: munge
         mode: '0400'
     - name: Ensure munge is enabled at boot
       ansible.builtin.systemd_service:
