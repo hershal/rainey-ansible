@@ -1,8 +1,3 @@
-- name: Ensure nvidia utilities are present
-  ansible.builtin.dnf:
-    name:
-      - nvtop
-
 - name: Ensure NVIDIA CUDA repo is present
   ansible.builtin.yum_repository:
     name: "{{ nvidia_cuda_repo_name }}"
@@ -26,3 +21,9 @@
 - name: Ensure CUDA is present
   ansible.builtin.dnf:
     name: "cuda-12-3"
+
+- name: Ensure nvidia utilities are present
+  ansible.builtin.dnf:
+    name:
+      - nvtop
+      - datacenter-gpu-manager
