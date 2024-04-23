@@ -22,8 +22,14 @@
   ansible.builtin.dnf:
     name: "cuda-12-3"
 
-- name: Ensure nvidia utilities are present
+- name: Ensure NVIDIA utilities are present
   ansible.builtin.dnf:
     name:
       - nvtop
       - datacenter-gpu-manager
+
+- name: Ensure NVIDIA DCGM service is running
+  ansible.builtin.systemd_service:
+    name: nvidia-dcgm
+    enabled: true
+    state: started
