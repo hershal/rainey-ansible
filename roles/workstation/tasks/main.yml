@@ -15,9 +15,6 @@
 - name: Ensure workstation tools are present
   ansible.builtin.dnf:
     name:
-      - NetworkManager-openconnect
-      - NetworkManager-openconnect-gnome
-      - openconnect
       - gnome-tweaks
       - gnome-extensions-app
       - file-roller
