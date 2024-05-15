@@ -12,11 +12,11 @@
       - "@Scientific Support"
       - "@VideoLAN Client"
 
-- name: Ensure workstation tools are present
+- name: Ensure GUI tools are present
   ansible.builtin.dnf:
     name:
       - gnome-tweaks
       - gnome-extensions-app
       - file-roller
       - file-roller-nautilus
-      - xrdp
+      - audacity
