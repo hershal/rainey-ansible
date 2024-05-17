@@ -20,4 +20,5 @@
       - file-roller
       - file-roller-nautilus
       - audacity
-      - libheif
+      - heif-pixbuf-loader
+      - webp-pixbuf-loader
