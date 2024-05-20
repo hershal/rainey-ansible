@@ -1,0 +1,12 @@
+---
+
+- name: Download all updates
+  hosts: all
+  become: true
+  tasks:
+    - name: DNF download updates
+      ansible.builtin.dnf:
+        update_cache: true
+        name: "*"
+        state: latest
+        download_only: true

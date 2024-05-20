@@ -54,6 +54,20 @@ After that, you'll have to set up the automounts on the new machine since there 
 
 And you're done! The new machine is ready for work.
 
+
+## Updates
+
+Updating is pretty simple. Just run
+
+    ansible-playbook -i hosts update-site.yml
+
+If you want to download updates first (makes doing a whole-site upgrade faster), run
+
+
+    ansible-playbook -i hosts update-site-downloadonly.yml
+
+
+
 ## TODOs
 - Set up slurm and enroot/singularity on `compute` nodes with controllers on `server` nodes.
 - Set up LDAP-enabled WireGuard services on `server` nodes.
