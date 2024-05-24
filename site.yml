@@ -82,10 +82,22 @@
   roles:
     - nvidia
 
-- name: Install slurm
+- name: Install slurm baseline
   become: true
   hosts: slurmworker:slurmcontroller
   tasks:
+    - name: Ensure slurm and munge are installed
+      ansible.builtin.dnf:
+        name:
+        - munge
+        - munge-libs
+        - munge-devel
+        - slurm
+        - slurm-slurmd
+        - slurm-slurmctld
+        - slurm-devel
+        - slurm-contribs
+        - slurm-doc
     - name: Copy munge key to compute and controller hosts
       ansible.builtin.copy:
         src: munge.key
@@ -98,3 +110,67 @@
         name: munge
         enabled: true
         state: started
+    - name: Add /etc/slurm directory
+      ansible.builtin.file:
+        path: /etc/slurm
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+    - name: Allow slurm to write in /var/spool/slurm
+      ansible.builtin.file:
+        path: /var/spool/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: "0755"
+        recurse: yes
+    - name: Copy slurm config to hosts
+      ansible.builtin.copy:
+        src: slurm.conf
+        dest: /etc/slurm/slurm.conf
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Copy gres config to hosts
+      ansible.builtin.copy:
+        src: gres.conf
+        dest: /etc/slurm/gres.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+- name: Ensure slurm control services are running
+  become: true
+  hosts: slurmcontroller
+  tasks:
+    - name: Ensure slurmctld is enabled at boot
+      ansible.builtin.systemd_service:
+        name: slurmctld
+        enabled: true
+        state: started
+    - name: Permit traffic for slurmctld
+      ansible.posix.firewalld:
+        port: "6817/tcp"
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+
+- name: Ensure slurm worker services are running
+  become: true
+  hosts: slurmworker
+  tasks:
+    - name: Ensure slurmd is enabled at boot
+      ansible.builtin.systemd_service:
+        name: slurmd
+        enabled: true
+        state: started
+    - name: Permit traffic for slurmd
+      ansible.posix.firewalld:
+        port: "6818/tcp"
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
