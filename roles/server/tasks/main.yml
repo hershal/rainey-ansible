@@ -38,6 +38,8 @@
       - podman-tui
       - unrar
       - the_silver_searcher
+      - fd-find
+      - ripgrep
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:
@@ -47,9 +49,6 @@
       - libmd-devel
       - libtool
       - rpm-build
-      - munge
-      - munge-libs
-      - munge-devel
       - freeipmi
       - freeipmi-devel
       - lua
@@ -72,11 +71,38 @@
       - libyaml-devel
       - libjwt
       - libjwt-devel
-      - cpp-jwt-devel
       - rrdtool
       - rrdtool-devel
       - libselinux-devel
       - openssl-devel
+      - libXaw
+      - libXaw-devel
+      - Xaw3d
+      - Xaw3d-devel
+      - libwebp-tools
+      - libwebp-devel
+      - librsvg2-devel
+      - gtk3-devel
+      - libtree-sitter
+      - libtree-sitter-devel
+      - jansson
+      - jansson-devel
+      - sqlite
+      - sqlite-libs
+      - sqlite-devel
+      - libjpeg-turbo
+      - libjpeg-turbo-utils
+      - libjpeg-turbo-devel
+      - giflib
+      - giflib-devel
+      - ImageMagick
+      - ImageMagick-devel
+      - ImageMagick-libs
+      - gnutls
+      - gnutls-utils
+      - gnutls-devel
+      - systemd-devel
+      - systemd-libs
       - perl-ExtUtils-MakeMaker
       - perl-DBI
       - perl-Switch
@@ -84,6 +110,8 @@
       - python3-pip
       - python3-virtualenv
       - ctags
+      - ShellCheck
+      - texinfo
 
 - name: Ensure cachefilesd is enabled and running
   ansible.builtin.systemd_service:
