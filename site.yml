@@ -48,6 +48,12 @@
         owner: root
         group: root
         mode: "0755"
+    - name: Fix SELinux for nfs home dirs
+      become: true
+      ansible.posix.seboolean:
+        name: use_nfs_home_dirs
+        persistent: true
+        state: true
 
 - name: Configure IPA clients
   hosts: server:workstation:compute
