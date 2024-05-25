@@ -67,7 +67,6 @@
         immediate: true
         state: enabled
 
-
 - name: Ensure slurm control services are running
   become: true
   hosts: slurmcontroller
