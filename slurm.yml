@@ -254,7 +254,7 @@
         dest: "/etc/slurm/"
         mode: "0644"
       notify:
-        - restart slurmctld
+        # - restart slurmctld
         - restart slurmd
 
     - name: copy pyxis plugstack file
