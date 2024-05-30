@@ -11,7 +11,6 @@
         - munge-devel
         - slurm
         - slurm-slurmd
-        - slurm-slurmctld
         - slurm-devel
         - slurm-contribs
         - slurm-doc
@@ -61,6 +60,14 @@
         group: root
         mode: '0644'
       register: gresconf
+    - name: Copy cgroup config
+      ansible.builtin.copy:
+        src: cgroup.conf
+        dest: /etc/slurm/cgroup.conf
+        owner: root
+        group: root
+        mode: '0644'
+      register: cgroupconf
     - name: Permit traffic for srun
       ansible.posix.firewalld:
         port: "6900-6999/tcp"
@@ -73,17 +80,14 @@
   become: true
   hosts: slurmcontroller
   tasks:
+    - name: Ensure slurmctld is installed
+      ansible.builtin.dnf:
+        name: slurm-slurmctld
     - name: Ensure slurmctld is enabled at boot
       ansible.builtin.systemd_service:
         name: slurmctld
         enabled: true
         state: started
-    - name: Restart slurmctld
-      ansible.builtin.systemd_service:
-        name: slurmctld
-        enabled: true
-        state: restarted
-      when: slurmconf.changed or gresconf.changed
     - name: Permit traffic for slurmctld
       ansible.posix.firewalld:
         port: "6817/tcp"
@@ -91,6 +95,88 @@
         permanent: true
         immediate: true
         state: enabled
+    - name: Restart slurmctld
+      ansible.builtin.systemd_service:
+        name: slurmctld
+        enabled: true
+        state: restarted
+      when: slurmconf.changed or gresconf.changed
+
+- name: Ensure slurm database services are running
+  become: true
+  hosts: slurmcontroller
+  vars_files:
+  - slurm-sensitive-data.yml
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.dnf:
+        name:
+        - mariadb-server
+        - python3-PyMySQL
+        - policycoreutils-python-utils
+        - slurm-slurmdbd
+
+    # - name: Allow mysql to read libaio.so.1
+    #   community.general.sefcontext:
+    #     target: '/lib64(/.*)?'
+    #     setype: mysqld_db_t
+    #     state: present
+
+    - name: Apply new SELinux file context to filesystem
+      ansible.builtin.command: restorecon -irv /lib64
+      changed_when: false
+
+    - name: start mariadb
+      ansible.builtin.systemd_service:
+        name: mariadb
+        state: started
+        enabled: true
+
+    - name: setup slurm db user
+      mysql_user:
+        name: "slurm"
+        password: "{{ slurm_db_password }}"
+        host: localhost
+        login_unix_socket: /var/lib/mysql/mysql.sock
+        priv: "*.*:USAGE/slurm_acct_db.*:ALL"
+        state: present
+
+    - name: configure slurmdbd.conf
+      template:
+        src: "slurmdbd.conf"
+        dest: "/etc/slurm/slurmdbd.conf"
+        owner: "slurm"
+        mode: 0600
+      notify:
+      - restart slurmdbd
+
+    - name: ensure slurmdbd is enabled
+      ansible.builtin.systemd_service:
+        name: slurmdbd
+        enabled: true
+        state: started
+
+    - name: Permit traffic for slurmdbd
+      ansible.posix.firewalld:
+        port: "6819/tcp"
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: create cluster
+      ansible.builtin.command: sacctmgr -i add cluster cluster0
+      register: create_cluster_result
+      failed_when: "create_cluster_result.rc != 0 and 'already exists' not in create_cluster_result.stdout"
+      changed_when: "'already exists' not in create_cluster_result.stdout"
+      run_once: true
+
+  handlers:
+      - name: restart slurmdbd
+        ansible.builtin.systemd_service:
+          name: slurmdbd
+          state: restarted
+
 
 - name: Ensure slurm worker services are running
   become: true
@@ -106,7 +192,7 @@
         name: slurmd
         enabled: true
         state: restarted
-      when: slurmconf.changed or gresconf.changed
+      when: slurmconf.changed or gresconf.changed or cgroupconf.changed
     - name: Permit traffic for slurmd
       ansible.posix.firewalld:
         port: "6818/tcp"
@@ -244,7 +330,6 @@
       register: result
       changed_when: "result.stdout != \"make: Nothing to be done for 'all'.\""
       notify:
-        - restart slurmctld
         - restart slurmd
 
     # Needed for 17.11, but not for 19.05. Doesn't hurt either way.
@@ -254,7 +339,6 @@
         dest: "/etc/slurm/"
         mode: "0644"
       notify:
-        # - restart slurmctld
         - restart slurmd
 
     - name: copy pyxis plugstack file
@@ -263,7 +347,6 @@
         dest: "/etc/slurm/plugstack.conf.d/"
         mode: "0644"
       notify:
-        - restart slurmctld
         - restart slurmd
 
     - name: set pyxis shared-object permissions
@@ -274,8 +357,4 @@
       - name: restart slurmd
         ansible.builtin.systemd_service:
           name: slurmd
-          state: restarted
-      - name: restart slurmctld
-        ansible.builtin.systemd_service:
-          name: slurmctld
           state: restarted
