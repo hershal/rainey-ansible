@@ -4,6 +4,7 @@ ansible_user=ladmin
 [compute]
 compute0.rainey.r2labs.us
 compute1.rainey.r2labs.us
+compute2.rainey.r2labs.us
 #alma9-vm0.rainey.r2labs.us
 #alma9-vm1.rainey.r2labs.us
 
@@ -30,5 +31,6 @@ control1.rainey.r2labs.us
 [slurmworker]
 compute0.rainey.r2labs.us
 compute1.rainey.r2labs.us
+compute2.rainey.r2labs.us
 #alma9-vm0.rainey.r2labs.us
 #alma9-vm1.rainey.r2labs.us
