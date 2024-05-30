@@ -63,9 +63,7 @@ Updating is pretty simple. Just run
 
 If you want to download updates first (makes doing a whole-site upgrade faster), run
 
-
     ansible-playbook -i hosts update-site-downloadonly.yml
-
 
 
 ## TODOs
