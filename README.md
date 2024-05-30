@@ -67,6 +67,5 @@ If you want to download updates first (makes doing a whole-site upgrade faster),
 
 
 ## TODOs
-- Set up slurm and enroot/singularity on `compute` nodes with controllers on `server` nodes.
 - Set up LDAP-enabled WireGuard services on `server` nodes.
 - Set up some kind of metrics aggregation service on `server` nodes.
