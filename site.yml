@@ -87,3 +87,5 @@
   hosts: compute
   roles:
     - nvidia
+
+- import_playbook: slurm.yml
