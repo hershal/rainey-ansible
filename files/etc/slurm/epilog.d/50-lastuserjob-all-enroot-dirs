@@ -3,8 +3,8 @@ set -ex
 
 command -v enroot >/dev/null || exit 0  # enroot not installed
 
-runtime_path="$(sudo -u "$SLURM_JOB_USER" sh -c 'echo "/run/enroot/user-$(id -u)"')"
+runtime_path="$(sudo -u "$SLURM_JOB_USER" sh -c 'echo "/run/user/$(id -u)/enroot"')"
 rm -rf "$runtime_path"
 
-data_path="$(sudo -u "$SLURM_JOB_USER" sh -c 'echo "/tmp/enroot-data/user-$(id -u)"')"
+data_path="$(sudo -u "$SLURM_JOB_USER" sh -c 'echo "/tmp/enroot-data-$(id -u)"')"
 rm -rf "$data_path"

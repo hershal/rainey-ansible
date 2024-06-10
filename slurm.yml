@@ -255,7 +255,7 @@
     #     state: enabled
 
 - name: Install enroot
-  hosts: slurmworker
+  hosts: slurmworker:slurmlogin
   become: yes
   tasks:
     - name: Install dependencies
@@ -282,6 +282,13 @@
         - https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot-3.5.0-1.el8.x86_64.rpm
         - https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot+caps-3.5.0-1.el8.x86_64.rpm
         disable_gpg_check: true
+    - name: Copy enroot config
+      ansible.builtin.copy:
+        src: etc/enroot/enroot.conf
+        dest: /etc/enroot/enroot.conf
+        owner: root
+        group: root
+        mode: '0644'
     - name: check if kernel unpriv enabled
       ansible.builtin.shell: "cat /proc/cmdline | grep 'namespace.unpriv_enable=1'"
       register: kernel_unpriv_enable
@@ -390,6 +397,13 @@
       ansible.builtin.file:
         path: "/usr/local/src/pyxis/spank_pyxis.so"
         mode: 0755
+    # - name: resize /run partition
+    #   mount:
+    #     name: /run
+    #     src: tmpfs
+    #     opts: size=50%
+    #     fstype: tmpfs
+    #     state: mounted
   handlers:
       - name: restart slurmd
         ansible.builtin.systemd_service:
