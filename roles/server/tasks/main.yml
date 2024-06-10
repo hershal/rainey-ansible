@@ -45,6 +45,7 @@
   ansible.builtin.dnf:
     name:
       - automake
+      - cmake
       - git
       - libmd-devel
       - libtool
@@ -109,9 +110,12 @@
       - python3-mysqlclient
       - python3-pip
       - python3-virtualenv
+      - pipx
+      - python-unversioned-command
       - ctags
       - ShellCheck
       - texinfo
+      - lz4
 
 - name: Ensure cachefilesd is enabled and running
   ansible.builtin.systemd_service:

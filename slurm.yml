@@ -1,7 +1,6 @@
-
 - name: Install slurm baseline
   become: true
-  hosts: slurmworker:slurmcontroller
+  hosts: slurmworker:slurmcontroller:slurmlogin
   tasks:
     - name: Ensure slurm and munge are installed
       ansible.builtin.dnf:
@@ -68,13 +67,16 @@
         group: root
         mode: '0644'
       register: cgroupconf
-    - name: Permit traffic for srun
-      ansible.posix.firewalld:
-        port: "6900-6999/tcp"
-        zone: public
-        permanent: true
-        immediate: true
-        state: enabled
+
+- name: Slurmlogin node configuration
+  become: true
+  hosts: slurmlogin
+  tasks:
+    - name: Ensure slurm is disabled at boot
+      ansible.builtin.systemd_service:
+        name: slurmd
+        enabled: false
+        state: stopped
 
 - name: Ensure slurm control services are running
   become: true
@@ -101,6 +103,13 @@
         enabled: true
         state: restarted
       when: slurmconf.changed or gresconf.changed
+    - name: Permit traffic for srun
+      ansible.posix.firewalld:
+        port: "50000-52000/tcp"
+        zone: public
+        permanent: true
+        immediate: true
+        state: disabled
 
 - name: Ensure slurm database services are running
   become: true
@@ -182,6 +191,11 @@
   become: true
   hosts: slurmworker
   tasks:
+    - name: Stop and disable firewalld.
+      service:
+        name: firewalld
+        state: stopped
+        enabled: false
     - name: Create slurm directories
       ansible.builtin.file:
         path: "{{ item }}"
@@ -242,13 +256,13 @@
         enabled: true
         state: restarted
       when: slurmconf.changed or gresconf.changed or cgroupconf.changed
-    - name: Permit traffic for slurmd
-      ansible.posix.firewalld:
-        port: "6818/tcp"
-        zone: public
-        permanent: true
-        immediate: true
-        state: enabled
+    # - name: Permit traffic for slurmd
+    #   ansible.posix.firewalld:
+    #     port: "6818/tcp"
+    #     zone: public
+    #     permanent: true
+    #     immediate: true
+    #     state: enabled
 
 - name: Install enroot
   hosts: slurmworker

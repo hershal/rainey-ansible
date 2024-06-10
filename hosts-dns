@@ -32,5 +32,7 @@ control0.rainey.r2labs.us
 compute0.rainey.r2labs.us
 compute1.rainey.r2labs.us
 compute2.rainey.r2labs.us
-#alma9-vm0.rainey.r2labs.us
-#alma9-vm1.rainey.r2labs.us
+
+[slurmlogin]
+alma9-vm0.rainey.r2labs.us
+alma9-vm1.rainey.r2labs.us
