@@ -88,4 +88,13 @@
   roles:
     - nvidia
 
+- name: Ensure cachefilesd is enabled and running
+  become: true
+  hosts: cachehosts
+  tasks:
+  - ansible.builtin.systemd_service:
+      name: cachefilesd
+      enabled: true
+      state: started
+
 - import_playbook: slurm.yml
