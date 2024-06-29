@@ -27,6 +27,7 @@
     name:
       - nvtop
       - datacenter-gpu-manager
+      - libnvidia-container-tools
 
 - name: Ensure NVIDIA DCGM service is running
   ansible.builtin.systemd_service:

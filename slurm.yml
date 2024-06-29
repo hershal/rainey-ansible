@@ -272,7 +272,6 @@
         - squashfs-tools
         - parallel
         - fuse-overlayfs
-        - libnvidia-container-tools
         - pigz
         - squashfuse
         - rpmlint
