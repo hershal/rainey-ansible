@@ -70,6 +70,13 @@
   roles:
     - server
 
+- name: Install docker tools
+  become: true
+  hosts: docker
+  roles:
+    - server
+    - docker
+
 - name: Install smb servers
   become: true
   hosts: smb

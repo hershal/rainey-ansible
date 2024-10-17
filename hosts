@@ -37,3 +37,11 @@ ansible_user=ladmin
 [slurmlogin]
 10.0.0.97
 10.0.0.98
+
+[cachehosts]
+10.0.0.129
+10.0.0.130
+10.0.0.131
+
+[docker]
+10.0.0.72
