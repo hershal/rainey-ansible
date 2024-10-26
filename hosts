@@ -6,8 +6,8 @@ ansible_user=ladmin
 10.0.0.130
 10.0.0.131
 10.0.0.71
-#10.0.0.97
-#10.0.0.98
+10.0.0.97
+10.0.0.98
 
 [workstation]
 
@@ -27,7 +27,7 @@ ansible_user=ladmin
 
 [slurmcontroller]
 10.0.0.67
-#10.0.0.68
+10.0.0.68
 
 [slurmworker]
 10.0.0.129

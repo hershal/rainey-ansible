@@ -5,14 +5,26 @@
     baseurl: "{{ nvidia_driver_rhel_cuda_repo_baseurl }}"
     gpgkey: "{{ nvidia_driver_rhel_cuda_repo_gpgkey }}"
 
-- name: "Reset NVIDIA driver stream"
-  ansible.builtin.dnf:
-    name:
-      - nvidia-driver
-      - "@nvidia-driver"
-    state: absent
-    autoremove: true
+- name: "Remove NVIDIA driver"
+  ansible.builtin.command: dnf remove @nvidia-driver nvidia-driver kmod-nvidia-open-dkms libnvidia-cfg nvidia-modprobe -y
+  become: true
   when: nvidia_driver_reset_stream
+
+- name: "Remove NVIDIA module"
+  ansible.builtin.command: dnf module reset nvidia-driver -y
+  become: true
+  when: nvidia_driver_reset_stream
+
+- name: "Install NVIDIA driver"
+  ansible.builtin.command: dnf module install "{{ 'nvidia-driver:' + nvidia_driver_branch }}" --allowerasing -y
+  become: true
+  when: nvidia_driver_reset_stream
+
+# - name: "Remove NVIDIA driver"
+#   ansible.builtin.dnf:
+#     name: nvidia-driver
+#     state: absent
+#   when: nvidia_driver_reset_stream
 
 - name: Ensure NVIDIA driver is present
   ansible.builtin.dnf:
