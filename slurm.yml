@@ -181,7 +181,7 @@
   become: true
   hosts: slurmworker
   tasks:
-    - name: Stop and disable firewalld.
+    - name: Stop and disable firewalld
       service:
         name: firewalld
         state: stopped
