@@ -17,7 +17,7 @@ ansible_user=ladmin
 10.0.0.71
 
 [smb]
-10.0.0.71
+10.0.0.74
 
 [ipaserver]
 10.0.0.65
