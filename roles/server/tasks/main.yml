@@ -72,6 +72,17 @@
       - libyaml-devel
       - libjwt
       - libjwt-devel
+      - libtirpc
+      - libwebp-tools
+      - libwebp-devel
+      - librsvg2-devel
+      - libjpeg-turbo
+      - libjpeg-turbo-utils
+      - libjpeg-turbo-devel
+      - libtree-sitter
+      - libtree-sitter-devel
+      - libpeas-devel
+      - ninja-build
       - rrdtool
       - rrdtool-devel
       - libselinux-devel
@@ -80,20 +91,12 @@
       - libXaw-devel
       - Xaw3d
       - Xaw3d-devel
-      - libwebp-tools
-      - libwebp-devel
-      - librsvg2-devel
       - gtk3-devel
-      - libtree-sitter
-      - libtree-sitter-devel
       - jansson
       - jansson-devel
       - sqlite
       - sqlite-libs
       - sqlite-devel
-      - libjpeg-turbo
-      - libjpeg-turbo-utils
-      - libjpeg-turbo-devel
       - giflib
       - giflib-devel
       - ImageMagick
@@ -117,6 +120,8 @@
       - ShellCheck
       - texinfo
       - lz4
+      - openldap-devel
+      - openldap-compat
 
 - name: Ensure cachefilesd is enabled and running
   ansible.builtin.systemd_service:
