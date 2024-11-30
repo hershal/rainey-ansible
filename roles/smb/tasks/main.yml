@@ -1,19 +1,35 @@
 - name: Ensure Samba server tools are present
   ansible.builtin.dnf:
     name:
-      - cockpit-file-sharing
       - ipa-client-samba
+      - ipa-server-trust-ad
+      - avahi-tools
+      - avahi
 
-- name: Permit traffic for Samba
+- name: Permit traffic for samba, netbios, avahi
   ansible.posix.firewalld:
-    service: samba-client
+    service: "{{ item }}"
     permanent: true
+    immediate: true
     state: enabled
+  loop:
+    - samba-client
+    - samba
+    - netbios-ns
+    - mdns
 
-- name: Ensure smb is enabled at boot
+- name: Copy smb config
+  ansible.builtin.copy:
+    src: etc/samba/smb.conf
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Restart smb, ensure enabled at boot
   ansible.builtin.systemd_service:
     name: smb
-    state: started
+    state: restarted
     enabled: true
 
 - name: Ensure winbind is enabled at boot

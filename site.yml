@@ -34,7 +34,7 @@
     - ipareplica
 
 - name: Preconfigure IPA clients
-  hosts: server:workstation:compute
+  hosts: server:workstation:compute:smb
   become: true
   tasks:
     - name: Remove /home fstab to prep for automount
@@ -56,7 +56,7 @@
         state: true
 
 - name: Configure IPA clients
-  hosts: server:workstation:compute
+  hosts: server:workstation:compute:smb
   become: true
   vars_files:
     - ipa-sensitive-data.yml
