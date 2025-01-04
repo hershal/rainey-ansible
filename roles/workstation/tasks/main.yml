@@ -25,3 +25,4 @@
       - slurm-gui
       - meld
       - tigervnc-server
+      - lm_sensors

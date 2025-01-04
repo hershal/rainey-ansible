@@ -47,6 +47,7 @@
       - automake
       - cmake
       - git
+      - git-lfs
       - libmd-devel
       - libtool
       - rpm-build

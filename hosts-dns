@@ -8,8 +8,10 @@ compute2.rainey.r2labs.us
 service0.rainey.r2labs.us
 alma9-vm0.rainey.r2labs.us
 alma9-vm1.rainey.r2labs.us
+ws0.rainey.r2labs.us
 
 [workstation]
+ws0.rainey.r2labs.us
 
 [server]
 control0.rainey.r2labs.us
@@ -38,11 +40,13 @@ compute2.rainey.r2labs.us
 alma9-vm0.rainey.r2labs.us
 alma9-vm1.rainey.r2labs.us
 service0.rainey.r2labs.us
+ws0.rainey.r2labs.us
 
 [cachehosts]
 compute0.rainey.r2labs.us
 compute1.rainey.r2labs.us
 compute2.rainey.r2labs.us
+ws0.rainey.r2labs.us
 
 [docker]
 docker0.rainey.r2labs.us
