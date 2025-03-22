@@ -40,6 +40,8 @@
       - nvtop
       - datacenter-gpu-manager
       - libnvidia-container-tools
+      - nvidia-container-toolkit-base
+      - pcp-pmda-nvidia-gpu
 
 - name: Ensure NVIDIA DCGM service is running
   ansible.builtin.systemd_service:
