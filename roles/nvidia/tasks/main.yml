@@ -32,7 +32,7 @@
 
 - name: Ensure CUDA is present
   ansible.builtin.dnf:
-    name: "cuda-12-4"
+    name: "cuda-12-8"
 
 - name: Ensure NVIDIA utilities are present
   ansible.builtin.dnf:
