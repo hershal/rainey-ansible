@@ -50,6 +50,8 @@
       - fd-find
       - ripgrep
       - mosh
+      - iperf
+      - p7zip
 
 - name: Ensure development tools are present
   ansible.builtin.dnf:
