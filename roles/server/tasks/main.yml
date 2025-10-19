@@ -24,6 +24,7 @@
       - pass-otp
       - pwgen
       - cachefilesd
+      - stow
       - python3-ansible-lint
       - screen
       - tmux
