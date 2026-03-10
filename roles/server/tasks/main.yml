@@ -141,3 +141,5 @@
       - curl
       - libcurl
       - libcurl-devel
+      - nginx
+      - golang
